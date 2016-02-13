@@ -380,7 +380,7 @@ int main(int argc, char *argv[])
 #else
 	{
 #endif
-	    init_pair(COLOR_BLACK, COLOR_BLACK, -1);
+	    init_pair(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK);
 	    init_pair(COLOR_GREEN, COLOR_GREEN, COLOR_BLACK);
 	    init_pair(COLOR_WHITE, COLOR_WHITE, COLOR_BLACK);
 	    init_pair(COLOR_RED, COLOR_RED, COLOR_BLACK);
