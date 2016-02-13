@@ -6,6 +6,12 @@ http://www.asty.org/cmatrix
 
 To compile the program, type 'make'.
 
+On modern systems, I can't get autotools to build this, so this seems to work for me on a clean code check-out:
+
+./configure
+gcc -DHAVE_CONFIG_H -I. -g -O2 -c -o cmatrix.o cmatrix.c
+gcc -g -O2 -o cmatrix cmatrix.o -lncurses -lncurses
+
 CMatrix by default operates in 'eye candy' mode.  It must be aborted with
 control-c or 'q'.  If you wish for more of a 'screen saver' effect, you
 must specify -s on the command line.  For usage, use cmatrix -h.
