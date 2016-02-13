@@ -248,7 +248,7 @@ int main(int argc, char *argv[])
     int i, j = 0, count = 0, screensaver = 0, asynch = 0, bold = -1,
 	force = 0, y, z, firstcoldone = 0, oldstyle = 0, random =
 	0, update = 4, highnum = 0, mcolor = COLOR_GREEN, randnum =
-	0, randmin = 0;
+	0, randmin = 0, rainbow = 0, cool = 0;
 
     char *oldtermname, *syscmd = NULL;
     int optchr, keypress;
@@ -288,10 +288,14 @@ int main(int argc, char *argv[])
 		mcolor = COLOR_MAGENTA;
 	    else if (!strcasecmp(optarg, "black"))
 		mcolor = COLOR_BLACK;
+	    else if (!strcasecmp(optarg, "rainbow"))
+		rainbow = 1;
+	    else if (!strcasecmp(optarg, "cool"))
+		cool = 1;
 	    else {
 		printf(" Invalid color selection\n Valid "
 		       "colors are green, red, blue, "
-		       "white, yellow, cyan, magenta " "and black.\n");
+		       "white, yellow, cyan, magenta, black, cool and rainbow.\n");
 		exit(1);
 	    }
 	    break;
@@ -376,7 +380,7 @@ int main(int argc, char *argv[])
 #else
 	{
 #endif
-	    init_pair(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK);
+	    init_pair(COLOR_BLACK, COLOR_BLACK, -1);
 	    init_pair(COLOR_GREEN, COLOR_GREEN, COLOR_BLACK);
 	    init_pair(COLOR_WHITE, COLOR_WHITE, COLOR_BLACK);
 	    init_pair(COLOR_RED, COLOR_RED, COLOR_BLACK);
@@ -386,6 +390,23 @@ int main(int argc, char *argv[])
 	    init_pair(COLOR_YELLOW, COLOR_YELLOW, COLOR_BLACK);
 	}
     }
+
+    int raincolors[] = {
+	COLOR_BLACK,
+	COLOR_GREEN,
+	COLOR_WHITE,
+	COLOR_RED,
+	COLOR_CYAN,
+	COLOR_MAGENTA,
+	COLOR_BLUE,
+	COLOR_YELLOW};
+
+    int coolcolors[] = {
+	COLOR_BLACK,
+	COLOR_GREEN,
+	COLOR_WHITE,
+	COLOR_CYAN,
+	COLOR_BLUE};
 
     srand(time(NULL));
 
@@ -596,6 +617,14 @@ int main(int argc, char *argv[])
 		    if (console || xwindow)
 			attroff(A_ALTCHARSET);
 		} else {
+		    if(rainbow == 1) {
+                        int rainbowcolor = rand() % 7;
+                        mcolor = raincolors[rainbowcolor];
+                    }
+		    if(cool == 1) {
+                        int coolcolor = rand() % 4;
+                        mcolor = coolcolors[coolcolor];
+                    }
 		    attron(COLOR_PAIR(mcolor));
 		    if (matrix[i][j].val == 1) {
 			if (bold)
